@@ -1,0 +1,20 @@
+{% extends 'bjj_app/base.html' %}
+
+{% block content %}
+  <h2>Add Comment</h2>
+  <form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Коментувати</button>
+  </form>
+
+<div class="clear"></div>
+<p><a href="{% url 'index' %}">&laquo; Повернутися назад</a></p>
+{% endblock %}
+
+<!--{% block sidebar %}-->
+<!--  {{ block.super }}-->
+<!--  {% if request.user.is_authenticated and comment.author == request.user %}-->
+<!--    <a href="{% url 'delete_comment' comment_id=comment.id %}">Delete Comment</a>-->
+<!--  {% endif %}-->
+<!--{% endblock %}-->
