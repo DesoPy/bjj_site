@@ -12,5 +12,5 @@ urlpatterns = [
     path('post/<slug:post_slug>/', post_detail, name='post_detail'),
     path('add_comment/<int:news_id>/', add_comment, name='add_comment'),
     path('delete_comment/<int:comment_id>/', delete_comment, name='delete_comment'),
-    path('news/<str:post_slug>/reaction/', add_reaction, name='add_reaction'),
+    path('add_reaction/<int:news_id>/', add_reaction, name='add_reaction')
 ]
