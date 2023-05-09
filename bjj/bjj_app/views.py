@@ -53,15 +53,12 @@ def add_reaction(request, news_id):
     if request.method == 'POST':
         form = ReactionForm(request.POST)
         if form.is_valid():
-            # Отримання обраної реакції з форми
             reaction_type = form.cleaned_data['reaction_type']
-            # Створення нового екземпляру NewsReaction з отриманою реакцією та іншими полями
             reaction = NewsReaction.objects.create(
                 reaction_type=reaction_type,
                 news=news,
                 author=request.user
             )
-            # Додавання реакції до новини
             news.reactions.add(reaction)
             messages.success(request, "Reaction added successfully.")
             return redirect('news_detail', slug=news.slug)
