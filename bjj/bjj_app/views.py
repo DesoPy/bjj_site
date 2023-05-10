@@ -3,7 +3,7 @@ from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse, HttpResponseNotFound
 from django.shortcuts import render, redirect, get_object_or_404
 
-from .forms import CommentForm, ReactionForm
+from .forms import CommentForm, NewsReactionForm
 from .models import *
 
 
@@ -18,10 +18,12 @@ menu = [{'title': 'Головна', 'url_name': 'home'},
 
 def index(request):
     post = News.objects.prefetch_related('comments', 'reactions').all()
-    context = {'post': post,
-               'menu': menu,
-               'title': 'Yamasaki Academy Jiu Jitsu Dnipro',
-               'reactions': NewsReaction.REACTION_CHOICES}
+    context = {
+        'post': post,
+        'menu': menu,
+        'title': 'Yamasaki Academy Jiu Jitsu Dnipro',
+        'reaction_choices': NewsReaction.REACTION_CHOICES
+    }
     return render(request, 'bjj_app/index.html', context=context)
 
 
@@ -47,25 +49,26 @@ def delete_comment(request, comment_id):
     return redirect('index')
 
 
-@login_required
 def add_reaction(request, news_id):
-    news = get_object_or_404(News, id=news_id)
+    post = get_object_or_404(News, id=news_id)
+    form = NewsReactionForm(request.POST)
     if request.method == 'POST':
-        form = ReactionForm(request.POST)
         if form.is_valid():
-            reaction_type = form.cleaned_data['reaction_type']
-            reaction = NewsReaction.objects.create(
-                reaction_type=reaction_type,
-                news=news,
-                author=request.user
-            )
-            news.reactions.add(reaction)
-            messages.success(request, "Reaction added successfully.")
-            return redirect('news_detail', slug=news.slug)
+            reaction = form.save(commit=False)
+            reaction.news = post
+            reaction.author = request.user
+            reaction.save()
+            return redirect('index')
 
-    form = ReactionForm()
-    context = {'form': form, 'menu': menu, 'reactions': NewsReaction.REACTION_CHOICES, 'news': news}
-    return render(request, 'bjj_app/news_detail.html', context)
+    else:
+        form = NewsReactionForm()
+
+    context = {
+        'post': post,
+        'reaction_form': form,
+        # 'reactions': NewsReaction.REACTION_CHOICES
+    }
+    return render(request, 'bjj_app/index.html', context=context)
 
 
 def gallery(request):

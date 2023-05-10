@@ -49,3 +49,6 @@ class NewsReaction(models.Model):
 
     def __str__(self):
         return str(self.news)
+
+    def get_reaction_type_display(self):
+        return dict(self.REACTION_CHOICES).get(self.reaction_type)

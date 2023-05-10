@@ -10,24 +10,10 @@ class CommentForm(forms.ModelForm):
         fields = ('content',)
 
 
-class ReactionForm(forms.ModelForm):
+class NewsReactionForm(forms.ModelForm):
     class Meta:
         model = NewsReaction
         fields = ['reaction_type']
         widgets = {
-            'reaction_type': forms.Select(attrs={'class': 'select'}),
+            'reaction_type': forms.Select(choices=NewsReaction.REACTION_CHOICES)
         }
-        labels = {
-            'reaction_type': 'Choose a reaction:',
-        }
-
-    def save(self, commit=True):
-        reaction = super().save(commit=False)
-        reaction.reaction_type = self.cleaned_data['reaction_type']
-        if commit:
-            reaction.save()
-        return reaction
-
-    reaction_type = forms.ChoiceField(choices=NewsReaction.REACTION_CHOICES, widget=forms.Select(attrs={'class': 'select'}), required=True)
-
-

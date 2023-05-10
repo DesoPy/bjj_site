@@ -42,19 +42,15 @@
                     <p>No reactions yet.</p>
                 {% endif %}
 
-<form method="post" action="{% url 'index' %}">
-  {% csrf_token %}
-  {{ form.as_p }}
-  <label for="reaction_type">Choose a reaction:</label>
-  <select name="{{ form.reaction_type.name }}" id="{{ form.reaction_type.id_for_label }}">
-    {% for value, label in reactions %}
-      <option value="{{ value }}">{{ label }}</option>
-    {% endfor %}
-  </select>
-  <input type="submit" value="Submit">
-</form>
-
-
+                    <form method="POST" action="{% url 'add_reaction' news_id=n.id %}">
+                        {% csrf_token %}
+                        <select name="reaction_type" id="id_reaction_type">
+                            {% for choice in reaction_choices %}
+                                <option value="{{ choice.0 }}">{{ choice.1 }}</option>
+                            {% endfor %}
+                        </select>
+                        <button type="submit">Add Reaction</button>
+                    </form>
 
             <div class="clear"></div>
             <p class="link-read-post"><a href="{% url 'post_detail' post_slug=n.slug %}">Читати повністю</a></p>
