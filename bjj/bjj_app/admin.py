@@ -1,9 +1,9 @@
 from django.contrib import admin
-from .models import News, Comment, NewsReaction
+from .models import News, Comment, NewsReaction, Photo, CommentPhoto, Trainer, Schedule
 
 
 class CommentAdmin(admin.ModelAdmin):
-    list_display = ('author', 'news', 'date')
+    list_display = ('author', 'news', 'content', 'date')
     list_filter = ('date',)
 
 
@@ -19,6 +19,29 @@ class NewsAdmin(admin.ModelAdmin):
     prepopulated_fields = {'slug': ('title',)}
 
 
+class PhotoAdmin(admin.ModelAdmin):
+    list_display = ('title', 'slug', 'photo', 'publication_date')
+    prepopulated_fields = {'slug': ('title',)}
+
+
+class CommentPhotoAdmin(admin.ModelAdmin):
+    list_display = ('photo', 'author', 'content', 'date')
+    list_filter = ('photo', 'author')
+    search_fields = ('photo__title', 'author')
+
+
+class TrainerAdmin(admin.ModelAdmin):
+    list_display = ('full_name', 'photo', 'contact_phone', 'information')
+
+
+class ScheduleAdmin(admin.ModelAdmin):
+    list_display = ('start_time', 'end_time', 'weekday', 'forma', 'group', 'trainer')
+
+
 admin.site.register(Comment, CommentAdmin)
 admin.site.register(NewsReaction, NewsReactionAdmin)
 admin.site.register(News, NewsAdmin)
+admin.site.register(Photo, PhotoAdmin)
+admin.site.register(CommentPhoto, CommentPhotoAdmin)
+admin.site.register(Trainer, TrainerAdmin)
+admin.site.register(Schedule, ScheduleAdmin)

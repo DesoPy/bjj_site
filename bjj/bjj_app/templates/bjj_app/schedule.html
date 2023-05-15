@@ -1,6 +1,70 @@
 {% extends 'bjj_app/base.html' %}
 
 {% block content %}
-<h1>{{title}}</h1>
+  <div class="container">
+    <h1 class="text-center">Розклад тренувань</h1>
 
+    <h2 class="text-center">Доросла група</h2>
+    <table class="table table-bordered table-hover text-center mx-auto">
+      <thead class="table-dark">
+        <tr>
+          <th class="text-center">День тижня</th>
+          <th class="text-center">Початок заняття</th>
+          <th class="text-center">Кінець заняття</th>
+          <th class="text-center">Формат</th>
+          <th class="text-center">Тренер</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for item in schedule %}
+        {% if item.group == 'Adult' %}
+          <tr>
+            <td>{{ item.weekday }}</td>
+            <td>{{ item.start_time|time:"H:i" }}</td>
+            <td>{{ item.end_time|time:"H:i" }}</td>
+            <td>{{ item.forma }}</td>
+            <td>{{ item.trainer.full_name }}</td>
+          </tr>
+        {% endif %}
+        {% empty %}
+          <tr>
+            <td colspan="5">Тренування відсутні</td>
+          </tr>
+
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+
+  <div class="container">
+    <h2 class="text-center">Дитяча група</h2>
+    <table class="table table-bordered table-hover text-center mx-auto">
+      <thead class="table-dark">
+        <tr>
+          <th class="text-center">День тижня</th>
+          <th class="text-center">Початок заняття</th>
+          <th class="text-center">Кінець заняття</th>
+          <th class="text-center">Формат</th>
+          <th class="text-center">Тренер</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for item in schedule %}
+        {% if item.group == 'Kids' %}
+          <tr>
+            <td>{{ item.weekday }}</td>
+            <td>{{ item.start_time|time:"H:i" }}</td>
+            <td>{{ item.end_time|time:"H:i" }}</td>
+            <td>{{ item.forma }}</td>
+            <td>{{ item.trainer.full_name }}</td>
+          </tr>
+        {% endif %}
+        {% empty %}
+          <tr>
+            <td colspan="5">Тренування відсутні</td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
 {% endblock %}

@@ -1,33 +1,73 @@
 {% extends 'bjj_app/base.html' %}
+
 {% block content %}
-    <h2>{{ post.title }}</h2>
-    {% if post.photo %}
-        <img src="{{ post.photo.url }}" alt="{{ post.title }} photo">
-    {% endif %}
-    <p>{{ post.content|linebreaks }}</p>
 
-    <div class="clear"></div>
-    <p><a href="{% url 'index' %}">&laquo; Повернутися назад</a></p>
+<div class="container mx-auto" style="width: 80%; margin: 0 auto;">
+  <div class="container my-5">
+    <div class="row">
+      <div class="col-md-8">
+        <h2 class="text-center">{{ post.title }}</h2>
+        {% if post.photo %}
+          <div class="container mx-auto" style="width: 100%;">
+            <img src="{{ post.photo.url }}" alt="{{ post.title }} photo" style="width: 100%; height: auto;">
+          </div>
+        {% endif %}
+        <p>{{ post.content|linebreaks }}</p>
+        <hr>
+        <div class="row">
+            <p class="link-read-post text-right"><a href="{% url 'add_comment' news_id=post.id %}" class="btn btn-primary mt-2">Додати коментар</a></p>
+        </div>
 
-    <h3>Comments:</h3>
     {% if post.comments.exists %}
-        <ul>
-            {% for c in post.comments.all %}
-                <li>{{ c.content|linebreaks}} - {{ c.author.username}} at {{ c.date }}</li>
-            {% endfor %}
-        </ul>
+      <ul class="list-group">
+        {% for c in post.comments.all %}
+          <li class="list-group-item">
+            <p style="margin: 0;">{{ c.content|linebreaks|truncatewords:20 }} - {{ c.author.username }} at {{ c.date }}</p>
+            {% if request.user == c.author %}
+              <a href="{% url 'delete_comment' comment_id=c.id %}">Видалити</a>
+            {% endif %}
+          </li>
+        {% endfor %}
+      </ul>
     {% else %}
-        <p>No comments yet.</p>
+      <p>Покищо ніхто не залишив коментарів.</p>
     {% endif %}
 
-    <h3>Reactions:</h3>
-    {% if post.reactions.exists %}
-        <ul>
-            {% for r in post.reactions.all %}
-                <li>{{ r.reaction_type }} - {{ r.author.username }} at {{ r.date }}</li>
-            {% endfor %}
-        </ul>
-    {% else %}
-        <p>No reactions yet.</p>
-    {% endif %}
+
+<!--    <h3>Reactions:</h3>-->
+<!--    {% if post.reactions.exists %}-->
+<!--      <ul class="list-unstyled">-->
+<!--        {% for r in post.reactions.all %}-->
+<!--          <li>{{ r.reaction_type }} - {{ r.author.username }} at {{ r.date }}-->
+<!--            {% if request.user.is_authenticated and r.author == request.user %}-->
+<!--              <form method="POST" action="{% url 'delete_reaction' r.pk %}">-->
+<!--                {% csrf_token %}-->
+<!--                <button type="submit">Видалити</button>-->
+<!--              </form>-->
+<!--            {% endif %}-->
+<!--          </li>-->
+<!--        {% endfor %}-->
+<!--      </ul>-->
+<!--    {% else %}-->
+<!--      <p>No reactions yet.</p>-->
+<!--    {% endif %}-->
+
+<!--    <div class="col-md-6 text-right">-->
+<!--      <form method="POST" action="{% url 'add_reaction' news_id=post.id %}">-->
+<!--        {% csrf_token %}-->
+<!--        <select name="reaction_type" id="id_reaction_type">-->
+<!--          {% for choice in reaction_choices %}-->
+<!--            <option value="{{ choice.0 }}">{{ choice.1 }}</option>-->
+<!--          {% endfor %}-->
+<!--        </select>-->
+<!--        <button type="submit">Додати реакцію</button>-->
+<!--      </form>-->
+<!--    </div>-->
+  </div>
+  <div class="col-md-4">
+    <p><a href="{% url 'index' %}" class="btn btn-primary">&laquo; Повернутися назад</a></p>
+  </div>
+</div>
+        </div>
+</div>
 {% endblock %}

@@ -4,41 +4,53 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html" charset="UTF-8">
     <title>{{ title }}</title>
-    <link type="text/css" href="{% static 'bjj_app/css/style.css' %}" rel="stylesheet">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
     <link rel="shortcut icon" href="{% static 'bjj_app/images/main.ico' %}" type="image/x-icon">
+
 </head>
-<body>
 
-<table class="table-page" border=0 cellpadding="0" cellspacing="0">
-<tr><td valign=top>
+<body class="centered-wrapper" style="background-color: #f5f4e1;">
+<nav class="navbar navbar-default" style="background-color: #d9e1f6;">
+    <div class="container-fluid">
+        <div class="navbar-header">
+           <a class="navbar-brand" href="{% url 'home' %}">
+				<img src="{% static 'bjj_app/images/logo.png' %}" alt="Logo" style="max-height: 120%; max-width: 120%;">
+			</a>
+        </div>
+        <ul class="nav navbar-nav">
+        {% for m in menu %}
+            <li><a href="{% url m.url_name %}">{{m.title}}</a></li>
+        {% endfor %}
+        </ul>
+        <ul class="nav navbar-nav navbar-right">
+            {% if request.user.is_authenticated %}
+                <li><a href="#"><span class="glyphicon glyphicon-user"></span> {{user.username}}</a></li>
+                <li><a href="{% url 'logout' %}"><span class="glyphicon glyphicon-log-out"></span> Вийти</a></li>
+            {% else %}
+                <li><a href="{% url 'register' %}"><span class="glyphicon glyphicon-user"></span> Реєстрація</a></li>
+                <li><a href="{% url 'login' %}"><span class="glyphicon glyphicon-log-in"></span> Увійти</a></li>
+            {% endif %}
+        </ul>
+    </div>
+</nav>
 
-{% block mainmenu %}
-		<div class="header">
-			<ul id="mainmenu" class="mainmenu">
-			<li class="logo"><a href="{% url 'home' %}"><div class="logo"></div></a></li>
-{% for m in menu %}
-	{% if not forloop.last %}
-			<li><a href="{% url m.url_name %}">{{m.title}}</a></li>
-	{% else %}
-			<li class="last"><a href="{% url m.url_name %}">{{m.title}}</a></li>
-	{% endif %}
-{% endfor %}
-			</ul>
-			<div class="clear"></div>
-		</div>
-{% endblock mainmenu %}
-
+<div class="container h-90">
 {% block content %}
+{#	<div class="card">#}
+{#      <div class="card-body">#}
+{#	      </div>#}
+{#    </div>#}
 {% endblock %}
+</div>
+</div>
 
-</td></tr>
-<!-- Footer -->
-<tr><td valign=top>
-	<div id="footer">
-		<p> 2023 F O O T E R</p>
-	</div>
-</td></tr></table>
 
+<footer class="footer fixed-bottom">
+    <div class="container">
+        <p>2023 F O O T E R</p>
+    </div>
+</footer>
 
 </body>
-</html>

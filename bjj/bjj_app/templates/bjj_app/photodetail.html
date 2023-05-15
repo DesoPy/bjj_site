@@ -1,0 +1,28 @@
+{% extends 'bjj_app/base.html' %}
+{% block content %}
+    <h2>{{ photo.title }}</h2>
+    {% if photo.photo %}
+        <img src="{{ photo.photo.url }}" alt="{{ photo.title }} photo">
+    {% endif %}
+    <p>{{ photo.content|linebreaks }}</p>
+
+    <div class="clear"></div>
+    <p><a href="{% url 'gallery' %}">&laquo; Повернутися назад</a></p>
+
+    <h3>Comments:</h3>
+    <div class="clear"></div>
+    <p class="link-read-post"><a href="{% url 'add_comment_photo' photo_id=photo.id %}">Додади коментар</a></p>
+    {% if photo.comments.exists %}
+        <ul>
+            {% for c in photo.comments.all %}
+                <li>{{ c.content|linebreaks}} - {{ c.author.username}} at {{ c.date }}</li>
+                {% if request.user == c.author %}
+                 <a href="{% url 'delete_comment_photo' comment_id=c.id %}">Видалити</a>
+                {% endif %}
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>No comments yet.</p>
+    {% endif %}
+
+{% endblock %}
