@@ -132,6 +132,7 @@ def add_comment_photo(request, photo_id):
             comment.author = request.user
             comment.save()
             return redirect('gallery')
+
     else:
         form = CommentForm()
 

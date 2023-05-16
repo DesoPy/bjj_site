@@ -11,7 +11,7 @@
         </div>
         <div class="d-flex justify-content-between">
           <div class="col-md-4">
-          <p><a href="{% url 'index' %}" class="btn btn-primary">&laquo; Повернутися назад</a></p>
+          <p><a href="{{ request.session.previous_url|default:'/' }}" class="btn btn-primary">&laquo; Повернутися назад</a></p>
           </div>
           <button type="submit" class="btn btn-primary">Коментувати</button>
         </div>

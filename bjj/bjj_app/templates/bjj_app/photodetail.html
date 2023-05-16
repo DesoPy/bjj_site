@@ -1,28 +1,47 @@
 {% extends 'bjj_app/base.html' %}
+
 {% block content %}
-    <h2>{{ photo.title }}</h2>
-    {% if photo.photo %}
-        <img src="{{ photo.photo.url }}" alt="{{ photo.title }} photo">
-    {% endif %}
-    <p>{{ photo.content|linebreaks }}</p>
 
-    <div class="clear"></div>
-    <p><a href="{% url 'gallery' %}">&laquo; Повернутися назад</a></p>
+    <div class="container mx-auto" style="width: 80%; margin: 0 auto;">
+  <div class="container my-5">
+    <div class="row">
+      <div class="col-md-8">
+        <h2 class="text-center">{{ photo.title }}</h2>
+        {% if photo.photo %}
+          <div class="container mx-auto" style="width: 100%;">
+            <img src="{{ photo.photo.url }}" alt="{{ photo.title }} photo" style="width: 100%; height: auto;">
+          </div>
+        {% endif %}
+        <p>{{ photo.content|linebreaks }}</p>
+        <hr>
+        <div class="col-md-4">
+          <p><a href="{{ request.session.previous_url|default:'/' }}" class="btn btn-primary">&laquo; Повернутися назад</a></p>
+        </div>
+        <div class="row">
+          <p class="link-read-post text-right"><a href="{% url 'add_comment_photo' photo_id=photo.id %}" class="btn btn-primary mt-3">Додати коментар</a></p>
 
-    <h3>Comments:</h3>
-    <div class="clear"></div>
-    <p class="link-read-post"><a href="{% url 'add_comment_photo' photo_id=photo.id %}">Додади коментар</a></p>
-    {% if photo.comments.exists %}
-        <ul>
+
+
+        {% if photo.comments.exists %}
+          <ul class="list-group">
             {% for c in photo.comments.all %}
-                <li>{{ c.content|linebreaks}} - {{ c.author.username}} at {{ c.date }}</li>
-                {% if request.user == c.author %}
-                 <a href="{% url 'delete_comment_photo' comment_id=c.id %}">Видалити</a>
-                {% endif %}
+              <li class="list-group-item">
+
+                  <p style="margin: 0;">{{ c.content|linebreaks|truncatewords:20 }} - {{ c.author.username }} at {{ c.date }}</p>
+                  {% if request.user == c.author %}
+                    <a href="{% url 'delete_comment_photo' comment_id=c.id %}">Видалити</a>
+                  {% endif %}
+
+              </li>
             {% endfor %}
-        </ul>
-    {% else %}
-        <p>No comments yet.</p>
-    {% endif %}
+          </ul>
+        {% else %}
+          <p>Покищо ніхто не залишив коментарів.</p>
+        {% endif %}
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
 
 {% endblock %}

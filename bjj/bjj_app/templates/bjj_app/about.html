@@ -1,4 +1,5 @@
 {% extends 'bjj_app/base.html' %}
+{% load static %}
 
 {% block content %}
 
@@ -26,7 +27,10 @@
       </div>
 
     </div>
-
   </div>
+
+<div style="width: 100%; height: 100%; border: #444444; display: flex; justify-content: center; align-items: center; margin-top: 150px; margin-bottom: 150px;">
+    <img src="{% static 'bjj_app/images/fone1.png' %}" style="max-height: 100%; height: auto;">
 </div>
+
 {% endblock %}

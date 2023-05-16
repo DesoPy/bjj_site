@@ -9,7 +9,7 @@
             <div class="card">
                 {% if n.photo %}
                     <div class="p-3 mb-2 bg-info text-dark border border-dark" style="height: 400px; overflow: hidden;">
-                        <img src="{{ n.photo.url }}" class="card-img-top" alt="{{ n.title }} photo" style="width: 100%; height: 100%; object-fit: none;">
+                        <img src="{{ n.photo.url }}" class="card-img-top" alt="{{ n.title }} photo" style="width: 100%; height: 100%; object-fit: contain;">
                     </div>
                 {% endif %}
 
@@ -19,11 +19,9 @@
                 <div class="col-md-6 d-inline-block">
                     <a href="{% url 'photo_detail' photo_slug=n.slug %}" class="btn btn-primary mt-2">Читати повністю &rarr;</a>
                 </div>
-                     {% if not n.comments.exists %}
                          <div class="col-md-6 d-inline-block text-right">
                         <a href="{% url 'add_comment_photo' photo_id=n.id %}" class="btn btn-primary mt-3">Додати коментар</a>
                          </div>
-                    {% endif %}
                 </div>
 
                 <div class="card-footer text-muted" style="height: 200px; overflow-y: visible;">
@@ -42,7 +40,7 @@
                             {% endfor %}
                         </ul>
                     {% else %}
-                        <p>No comments yet.</p>
+                        <p>Покищо ніхто не залишив коментарів.</p>
                     {% endif %}
 
                 </div>

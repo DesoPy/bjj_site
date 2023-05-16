@@ -1,8 +1,13 @@
 {% extends 'bjj_app/base.html' %}
+{% load static %}
 
 {% block content %}
   <div class="container">
     <h1 class="text-center">Розклад тренувань</h1>
+
+    <div style="width: 100%; height: auto;  display: flex; justify-content: center; align-items: center;">
+        <img src="{% static 'bjj_app/images/logo3.png' %}" style="width: 40%; height: 40%;  display: flex; justify-content: center; align-items: center;">
+    </div>
 
     <h2 class="text-center">Доросла група</h2>
     <table class="table table-bordered table-hover text-center mx-auto">
@@ -67,4 +72,5 @@
       </tbody>
     </table>
   </div>
+
 {% endblock %}

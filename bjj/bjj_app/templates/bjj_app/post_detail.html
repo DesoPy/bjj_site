@@ -14,9 +14,13 @@
         {% endif %}
         <p>{{ post.content|linebreaks }}</p>
         <hr>
+        <div class="col-md-4">
+    <p><a href="{{ request.session.previous_url|default:'/' }}" class="btn btn-primary">&laquo; Повернутися назад</a></p>
+  </div>
         <div class="row">
             <p class="link-read-post text-right"><a href="{% url 'add_comment' news_id=post.id %}" class="btn btn-primary mt-2">Додати коментар</a></p>
-        </div>
+
+
 
     {% if post.comments.exists %}
       <ul class="list-group">
@@ -32,42 +36,39 @@
     {% else %}
       <p>Покищо ніхто не залишив коментарів.</p>
     {% endif %}
-
-
-<!--    <h3>Reactions:</h3>-->
-<!--    {% if post.reactions.exists %}-->
-<!--      <ul class="list-unstyled">-->
-<!--        {% for r in post.reactions.all %}-->
-<!--          <li>{{ r.reaction_type }} - {{ r.author.username }} at {{ r.date }}-->
-<!--            {% if request.user.is_authenticated and r.author == request.user %}-->
-<!--              <form method="POST" action="{% url 'delete_reaction' r.pk %}">-->
-<!--                {% csrf_token %}-->
-<!--                <button type="submit">Видалити</button>-->
-<!--              </form>-->
-<!--            {% endif %}-->
-<!--          </li>-->
-<!--        {% endfor %}-->
-<!--      </ul>-->
-<!--    {% else %}-->
-<!--      <p>No reactions yet.</p>-->
-<!--    {% endif %}-->
-
-<!--    <div class="col-md-6 text-right">-->
-<!--      <form method="POST" action="{% url 'add_reaction' news_id=post.id %}">-->
-<!--        {% csrf_token %}-->
-<!--        <select name="reaction_type" id="id_reaction_type">-->
-<!--          {% for choice in reaction_choices %}-->
-<!--            <option value="{{ choice.0 }}">{{ choice.1 }}</option>-->
-<!--          {% endfor %}-->
-<!--        </select>-->
-<!--        <button type="submit">Додати реакцію</button>-->
-<!--      </form>-->
-<!--    </div>-->
-  </div>
-  <div class="col-md-4">
-    <p><a href="{% url 'index' %}" class="btn btn-primary">&laquo; Повернутися назад</a></p>
-  </div>
-</div>
         </div>
+
+{#<!--    <h3>Reactions:</h3>-->#}
+{#<!--    {% if post.reactions.exists %}-->#}
+{#<!--      <ul class="list-unstyled">-->#}
+{#<!--        {% for r in post.reactions.all %}-->#}
+{#<!--          <li>{{ r.reaction_type }} - {{ r.author.username }} at {{ r.date }}-->#}
+{#<!--            {% if request.user.is_authenticated and r.author == request.user %}-->#}
+{#<!--              <form method="POST" action="{% url 'delete_reaction' r.pk %}">-->#}
+{#<!--                {% csrf_token %}-->#}
+{#<!--                <button type="submit">Видалити</button>-->#}
+{#<!--              </form>-->#}
+{#<!--            {% endif %}-->#}
+{#<!--          </li>-->#}
+{#<!--        {% endfor %}-->#}
+{#<!--      </ul>-->#}
+{#<!--    {% else %}-->#}
+{#<!--      <p>No reactions yet.</p>-->#}
+{#<!--    {% endif %}-->#}
+{##}
+{#<!--    <div class="col-md-6 text-right">-->#}
+{#<!--      <form method="POST" action="{% url 'add_reaction' news_id=post.id %}">-->#}
+{#<!--        {% csrf_token %}-->#}
+{#<!--        <select name="reaction_type" id="id_reaction_type">-->#}
+{#<!--          {% for choice in reaction_choices %}-->#}
+{#<!--            <option value="{{ choice.0 }}">{{ choice.1 }}</option>-->#}
+{#<!--          {% endfor %}-->#}
+{#<!--        </select>-->#}
+{#<!--        <button type="submit">Додати реакцію</button>-->#}
+{#<!--      </form>-->#}
+{#<!--    </div>-->#}
+            </div>
+        </div>
+    </div>
 </div>
 {% endblock %}

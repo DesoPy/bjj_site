@@ -24,6 +24,7 @@
             <li><a href="{% url m.url_name %}">{{m.title}}</a></li>
         {% endfor %}
         </ul>
+
         <ul class="nav navbar-nav navbar-right">
             {% if request.user.is_authenticated %}
                 <li><a href="#"><span class="glyphicon glyphicon-user"></span> {{user.username}}</a></li>
@@ -33,6 +34,7 @@
                 <li><a href="{% url 'login' %}"><span class="glyphicon glyphicon-log-in"></span> Увійти</a></li>
             {% endif %}
         </ul>
+
     </div>
 </nav>
 
@@ -46,11 +48,10 @@
 </div>
 </div>
 
-
-<footer class="footer fixed-bottom">
-    <div class="container">
+<div class="container">
+    <footer class="footer fixed-bottom">
         <p>2023 F O O T E R</p>
-    </div>
-</footer>
+    </footer>
+ </div>
 
 </body>
