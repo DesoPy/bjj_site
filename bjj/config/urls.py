@@ -21,6 +21,7 @@ from config import settings
 from bjj_app.views import *
 from django.urls import path, include
 
+
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('bjj_app.urls')),

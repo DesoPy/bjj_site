@@ -24,7 +24,7 @@
         {% for item in schedule %}
         {% if item.group == 'Adult' %}
           <tr>
-            <td>{{ item.weekday }}</td>
+            <td>{{ item.get_weekday_display }}</td>
             <td>{{ item.start_time|time:"H:i" }}</td>
             <td>{{ item.end_time|time:"H:i" }}</td>
             <td>{{ item.forma }}</td>
@@ -57,7 +57,7 @@
         {% for item in schedule %}
         {% if item.group == 'Kids' %}
           <tr>
-            <td>{{ item.weekday }}</td>
+            <td>{{ item.get_weekday_display }}</td>
             <td>{{ item.start_time|time:"H:i" }}</td>
             <td>{{ item.end_time|time:"H:i" }}</td>
             <td>{{ item.forma }}</td>

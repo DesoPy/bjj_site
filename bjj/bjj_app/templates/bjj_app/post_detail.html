@@ -18,9 +18,13 @@
     <p><a href="{{ request.session.previous_url|default:'/' }}" class="btn btn-primary">&laquo; Повернутися назад</a></p>
   </div>
         <div class="row">
-            <p class="link-read-post text-right"><a href="{% url 'add_comment' news_id=post.id %}" class="btn btn-primary mt-2">Додати коментар</a></p>
-
-
+            <p class="link-read-post text-right">
+                {% if user.is_authenticated %}
+                    <a href="{% url 'add_comment' news_id=post.id %}" class="btn btn-primary mt-2">Додати коментар</a>
+                {% else %}
+                    <a href="{% url 'login' %}" class="btn btn-primary mt-2">Авторизуйтесь</a>
+                {% endif %}
+            </p>
 
     {% if post.comments.exists %}
       <ul class="list-group">

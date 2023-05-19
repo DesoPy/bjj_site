@@ -1,4 +1,5 @@
 {% extends 'bjj_app/base.html' %}
+{% load static %}
 
 {% block content %}
 <div class="container">
@@ -9,14 +10,14 @@
       <form method="post" class="mt-4">
         {% csrf_token %}
 
-        <div class="form-group">
-          <label for="{{ form.username.id_for_label }}">Ім'я користувача:</label>
+        <div class="form-group row">
+          <label class="col-sm-4 col-form-label" for="{{ form.username.id_for_label }}">Ім'я користувача:</label>
           {{ form.username }}
           <div class="invalid-feedback">{{ form.username.errors }}</div>
         </div>
 
-        <div class="form-group">
-          <label for="{{ form.password.id_for_label }}">Пароль:</label>
+        <div class="form-group row">
+          <label class="col-sm-4 col-form-label" for="{{ form.password.id_for_label }}">Пароль:</label>
           {{ form.password }}
           <div class="invalid-feedback">{{ form.password.errors }}</div>
         </div>
@@ -25,5 +26,9 @@
       </form>
     </div>
   </div>
+</div>
+
+<div style="width: 100%; height: 100%; border: #444444; display: flex; justify-content: center; align-items: center; margin-top: 150px; margin-bottom: 250px;">
+    <img src="{% static 'bjj_app/images/fone1.png' %}" style="max-height: 100%; height: auto;">
 </div>
 {% endblock %}

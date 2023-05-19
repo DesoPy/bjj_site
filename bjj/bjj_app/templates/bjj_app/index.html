@@ -26,7 +26,12 @@
                     <p class="link-read-post"><a href="{% url 'post_detail' post_slug=n.slug %}" class="btn btn-primary mt-2">Читати повністю</a></p>
                 </div>
                 <div class="col-md-6 d-inline-block text-right">
+                     {% if user.is_authenticated %}
                     <p class="link-read-post"><a href="{% url 'add_comment' news_id=n.id %}" class="btn btn-primary mt-2">Додати коментар</a></p>
+                    {% else %}
+                    <p class="link-read-post"><a href="{% url 'login' %}" class="btn btn-primary mt-2">Авторизуйтесь</a></p>
+                    {% endif %}
+
                 </div>
             </div>
 
@@ -51,39 +56,44 @@
             </ul>
             {% endif %}
 
-{#            <h3>Reactions:</h3>#}
-{#            <div class="row">#}
-{#                <div class="col-md-6">#}
-{#                    {% if n.reactions.exists %}#}
-{#                    <ul>#}
-{#                        {% for r in n.reactions.all %}#}
-{#                        <li>{{ r.reaction_type }} - {{ r.author.username }} at {{ r.date }}#}
-{#                            {% if request.user.is_authenticated and r.author == request.user %}#}
-{#                            <form method="POST" action="{% url 'delete_reaction' r.pk %}">#}
-{#                                {% csrf_token %}#}
-{#                                <button type="submit">Delete</button>#}
-{#                            </form>#}
-{#                            {% endif %}#}
-{#                        </li>#}
-{#                        {% endfor %}#}
-{#                    </ul>#}
-{#                    {% else %}#}
-{#                    <p>No reactions yet.</p>#}
+{#<h3>Reactions:</h3>#}
+{#<div class="row">#}
+{#    <div class="col-md-6">#}
+{#        {% if n.reactions.exists %}#}
+{#            {% for r in n.reactions.all %}#}
+{#                <div>#}
+{#                    {% if r.reaction_type == 'thumbs_up' %}#}
+{#                        <i class="bi bi-hand-thumbs-up"></i>#}
+{#                    {% elif r.reaction_type == 'heart' %}#}
+{#                        <i class="bi bi-heart"></i>#}
+{#                    {% endif %}#}
+{#                    {{ r.author.username }} at {{ r.date }}#}
+{#                    {% if request.user.is_authenticated and r.author == request.user %}#}
+{#                        <form method="POST" action="{% url 'delete_reaction' r.pk %}">#}
+{#                            {% csrf_token %}#}
+{#                            <button type="submit">Delete</button>#}
+{#                        </form>#}
 {#                    {% endif %}#}
 {#                </div>#}
-{#            #}
-{#                <div class="col-md-6 text-right">#}
-{#                    <form method="POST" action="{% url 'add_reaction' news_id=n.id %}">#}
-{#                        {% csrf_token %}#}
-{#                        <select name="reaction_type" id="id_reaction_type">#}
-{#                            {% for choice in reaction_choices %}#}
-{#                            <option value="{{ choice.0 }}">{{ choice.1 }}</option>#}
-{#                            {% endfor %}#}
-{#                        </select>#}
-{#                        <button type="submit">Add Reaction</button>#}
-{#                    </form>#}
-{#                </div>#}
-{#            </div>#}
+{#            {% endfor %}#}
+{#        {% else %}#}
+{#            <p>No reactions yet.</p>#}
+{#        {% endif %}#}
+{#    </div>#}
+{##}
+{#    <div class="col-md-6 text-right">#}
+{#        <form method="POST" action="{% url 'add_reaction' news_id=n.id %}">#}
+{#            {% csrf_token %}#}
+{#            <select name="reaction_type" id="id_reaction_type">#}
+{#                {% for choice in reaction_choices %}#}
+{#                    <option value="{{ choice.0 }}">{{ choice.1 }}</option>#}
+{#                {% endfor %}#}
+{#            </select>#}
+{#            <button type="submit">Add Reaction</button>#}
+{#        </form>#}
+{#    </div>#}
+{#</div>#}
+
         </div>
     </div>
 </div>
