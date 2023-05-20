@@ -26,8 +26,9 @@ SECRET_KEY = 'django-insecure-u@xyxvb=42zf#*hc6#_z_i(jb@f-w$ho8lh9mg6*36f8_lg3c-
 DEBUG = True
 
 ALLOWED_HOSTS = [
-    'deso.pythonanywhere.com',
-    'www.deso.pythonanywhere.com'
+    '127.0.0.1',
+    'bjj.pythonanywhere.com',
+    'www.bjj.pythonanywhere.com'
 ]
 
 
@@ -80,6 +81,10 @@ WSGI_APPLICATION = 'config.wsgi.application'
 
 DATABASES = {
     'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+    },
+    'user': {
         'ENGINE': 'django.db.backends.postgresql',
         'NAME': 'bjj',
         'USER': 'Serhii',
@@ -135,5 +140,3 @@ MEDIA_URL = '/media/'
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
-
-TELEGRAM_BOT_API_KEY = '6185620900:AAHZ9CkAUh-E6TyoNAMV8TLeUH0VmhLtJqY'
