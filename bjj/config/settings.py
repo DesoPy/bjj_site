@@ -27,8 +27,8 @@ DEBUG = True
 
 ALLOWED_HOSTS = [
     '127.0.0.1',
-    'bjj.pythonanywhere.com',
-    'www.bjj.pythonanywhere.com'
+    'deso.pythonanywhere.com',
+    'www.deso.pythonanywhere.com'
 ]
 
 
