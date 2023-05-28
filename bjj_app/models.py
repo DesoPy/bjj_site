@@ -97,6 +97,9 @@ class Trainer(models.Model):
     def __str__(self):
         return str(self.full_name)
 
+    class Meta:
+        ordering = ['full_name']
+
 
 class Schedule(models.Model):
     WEEKDAYS_CHOICES = (
@@ -121,5 +124,4 @@ class Schedule(models.Model):
 
     class Meta:
         verbose_name = 'Schedule'
-        # verbose_name_plural = 'Schedule'
-        # ordering = ['weekday']
+        ordering = ['trainer']
